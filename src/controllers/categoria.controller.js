@@ -1,8 +1,18 @@
 import Categoria from '../models/categoria.model.js'
 
 const getCategorias = async (req, res) => {
-  const categorias = await Categoria.find()
-  res.json(categorias)
+  let categorias = await Categoria.find()
+  categorias = categorias.map(categoria => {
+    return {
+      id: categoria._id,
+      nombre: categoria.nombre,
+      min_edad: categoria.min_edad,
+      max_edad: categoria.max_edad,
+      genero: categoria.genero
+    }
+  })
+
+  res.status(200).json(categorias)
 }
 const createCategoria = async (req, res) => {
   let error = ''
