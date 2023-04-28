@@ -122,7 +122,29 @@ const updateCategoriaById = async (req, res) => {
       }
     })
 }
-const deleteCategoriaById = async (req, res) => {}
+const deleteCategoriaById = async (req, res) => {
+  const { id } = req.params
+  await Categoria.findByIdAndDelete(id)
+    .then(categoria => {
+      if (!categoria) {
+        res.status(404).json({ error: 'Categoria no encontrada' })
+        return
+      }
+
+      res.status(200).json({
+        message: 'Categoria eliminada correctamente'
+      })
+    })
+    .catch(error => {
+      console.error('Error al eliminar la categoria', error)
+
+      res.status(500).json({
+        error:
+          'Error al eliminar la categoria, revisa el id enviado o prueba mas tarde'
+      })
+      return
+    })
+}
 
 export {
   createCategoria,
