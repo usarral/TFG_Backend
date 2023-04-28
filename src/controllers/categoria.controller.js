@@ -1,4 +1,5 @@
 import Categoria from '../models/categoria.model.js'
+import checkObjectId from '../helpers/checkObjectId.js'
 
 const getCategorias = async (req, res) => {
   let categorias = await Categoria.find()
@@ -6,8 +7,8 @@ const getCategorias = async (req, res) => {
     return {
       id: categoria._id,
       nombre: categoria.nombre,
-      min_edad: categoria.min_edad,
-      max_edad: categoria.max_edad,
+      minEdad: categoria.minEdad,
+      maxEdad: categoria.maxEdad,
       genero: categoria.genero
     }
   })
@@ -18,22 +19,22 @@ const createCategoria = async (req, res) => {
   let error = ''
   try {
     console.info('req.body', req.body.nombre)
-    let { nombre, min_edad, max_edad, genero } = req.body
-    // Si nombre, min_edad, max_edad o genero no existen se lanza un error
-    if (!nombre || !min_edad || !max_edad || !genero) {
-      error = 'nombre, min_edad, max_edad y genero son requeridos'
+    let { nombre, minEdad, maxEdad, genero } = req.body
+    // Si nombre, minEdad, maxEdad o genero no existen se lanza un error
+    if (!nombre || !minEdad || !maxEdad || !genero) {
+      error = 'nombre, minEdad, maxEdad y genero son requeridos'
       res.status(400).json({ error })
     }
-    // Si min_edad o max_edad no son numeros se lanza un error
-    if (isNaN(min_edad) || isNaN(max_edad)) {
+    // Si minEdad o maxEdad no son numeros se lanza un error
+    if (isNaN(minEdad) || isNaN(maxEdad)) {
       error = 'La edad minima y maxima deben ser numeros'
       res.status(400).json({ error })
     }
-    min_edad = parseInt(min_edad)
-    max_edad = parseInt(max_edad)
+    minEdad = parseInt(minEdad)
+    maxEdad = parseInt(maxEdad)
 
-    // Si min_edad es mayor a max_edad se lanza un error
-    if (min_edad > max_edad) {
+    // Si minEdad es mayor a maxEdad se lanza un error
+    if (minEdad > maxEdad) {
       error = 'La edad minima no puede ser mayor a la edad maxima'
       res.status(400).json({ error })
     }
@@ -43,7 +44,7 @@ const createCategoria = async (req, res) => {
       error = 'El genero debe ser O, M o F'
       res.status(400).json({ error })
     }
-    const newCategoria = new Categoria({ nombre, min_edad, max_edad, genero })
+    const newCategoria = new Categoria({ nombre, minEdad, maxEdad, genero })
     const categoriaSaved = await newCategoria.save()
     res.status(201).json(categoriaSaved)
   } catch (error) {
@@ -65,13 +66,14 @@ const getCategoriaById = async (req, res) => {
       res.status(200).json({
         id: categoria._id,
         nombre: categoria.nombre,
-        min_edad: categoria.min_edad,
-        max_edad: categoria.max_edad,
+        minEdad: categoria.minEdad,
+        maxEdad: categoria.maxEdad,
         genero: categoria.genero
       })
-      return
     })
     .catch(error => {
+      console.error('Error al buscar la categoria', error)
+
       res.status(500).json({
         error:
           'Error al buscar la categoria, revisa el id enviado o prueba mas tarde'
