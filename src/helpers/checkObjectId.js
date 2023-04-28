@@ -6,3 +6,5 @@ const checkObjectId = id => {
   }
   return false
 }
+
+export default checkObjectId
