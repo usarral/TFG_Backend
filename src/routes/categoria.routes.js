@@ -13,5 +13,9 @@ router.post('/', createCategoria)
 router.get('/:categoriaId', getCategoriaById)
 router.put('/:categoriaId', updateCategoriaById)
 router.delete('/:categoriaId', deleteCategoriaById)
+//404 error
+router.use((req, res) => {
+  res.status(404).json({ message: 'Endpoint not found' })
+})
 
 export default router
