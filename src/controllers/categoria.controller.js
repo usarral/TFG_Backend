@@ -81,7 +81,47 @@ const getCategoriaById = async (req, res) => {
       return
     })
 }
-const updateCategoriaById = async (req, res) => {}
+const updateCategoriaById = async (req, res) => {
+  const { id } = req.params
+  const { nombre, minEdad, maxEdad, genero } = req.body
+  const categoria = await Categoria.findById(id)
+  if (!categoria) {
+    res.status(404).json({ error: 'Categoria no encontrada' })
+    return
+  }
+  categoria.nombre = nombre || categoria.nombre
+  categoria.minEdad = minEdad || categoria.minEdad
+  categoria.maxEdad = maxEdad || categoria.maxEdad
+  categoria.genero = genero || categoria.genero
+  await categoria
+    .save()
+    .then(categoria => {
+      res.status(200).json({
+        message: 'Categoria actualizada correctamente',
+        id: categoria._id,
+        nombre: categoria.nombre,
+        minEdad: categoria.minEdad,
+        maxEdad: categoria.maxEdad,
+        genero: categoria.genero
+      })
+    })
+    .catch(error => {
+      // Si error _message dice 'Validation failed' es porque algun campo no cumple con las validaciones
+      if (error._message === 'Categoria validation failed') {
+        res.status(400).json({
+          error:
+            'Error al actualizar la categoria, revisa que los datos sean correctos'
+        })
+        return
+      } else {
+        res.status(500).json({
+          error:
+            'Error al actualizar la categoria, revisa el id enviado o prueba mas tarde'
+        })
+        return
+      }
+    })
+}
 const deleteCategoriaById = async (req, res) => {}
 
 export {
