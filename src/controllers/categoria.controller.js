@@ -52,7 +52,33 @@ const createCategoria = async (req, res) => {
     res.status(500).json({ error })
   }
 }
-const getCategoriaById = async (req, res) => {}
+const getCategoriaById = async (req, res) => {
+  const { id } = req.params
+
+  await Categoria.findById(id)
+    .then(categoria => {
+      if (!categoria) {
+        res.status(404).json({ error: 'Categoria no encontrada' })
+        return
+      }
+
+      res.status(200).json({
+        id: categoria._id,
+        nombre: categoria.nombre,
+        min_edad: categoria.min_edad,
+        max_edad: categoria.max_edad,
+        genero: categoria.genero
+      })
+      return
+    })
+    .catch(error => {
+      res.status(500).json({
+        error:
+          'Error al buscar la categoria, revisa el id enviado o prueba mas tarde'
+      })
+      return
+    })
+}
 const updateCategoriaById = async (req, res) => {}
 const deleteCategoriaById = async (req, res) => {}
 
