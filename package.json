@@ -9,7 +9,8 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "lint": "standard",
-    "lint:fix": "standard --fix"
+    "lint:fix": "standard --fix",
+    "test": "jest --watch"
   },
   "keywords": [],
   "license": "ISC",
