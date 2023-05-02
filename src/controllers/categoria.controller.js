@@ -1,5 +1,4 @@
 import Categoria from '../models/categoria.model.js'
-import checkObjectId from '../helpers/checkObjectId.js'
 
 const getCategorias = async (req, res) => {
   let categorias = await Categoria.find()
