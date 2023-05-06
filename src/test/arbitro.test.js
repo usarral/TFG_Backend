@@ -17,7 +17,6 @@ describe('Tests de API de Arbitro', () => {
       }
     }
     let arbitros = await fetch(`${BASEURL}/arbitro`).then(res => res.json())
-    console.log(arbitros)
     expect(arbitros).toMatchSchema(schema)
   })
   test('Test Obtener Arbitro por ID', async () => {})
