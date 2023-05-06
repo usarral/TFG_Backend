@@ -6,7 +6,7 @@ const categoriaSchema = new Schema({
   maxEdad: Number,
   genero: {
     type: String,
-    enum: ['M', 'F', 'O']
+    enum: ['M', 'F', 'X']
   }
 })
 
