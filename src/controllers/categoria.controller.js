@@ -1,3 +1,15 @@
+/* TODO:
+[] Crear categoria
+  [] Validar que nombre, minEdad, maxEdad y genero existan
+  [] Validar que minEdad y maxEdad sean numeros
+  [] Validar que minEdad no sea mayor a maxEdad
+  [] Validar que genero sea M, F o X
+  [] Validar que no exista una categoria con el mismo nombre, genero, minEdad y maxEdad
+[] Obtener categorias
+[] Obtener categoria por ID
+[] Modificar categoria por ID
+[] Eliminar categoria por ID
+*/
 import Categoria from '../models/categoria.model.js'
 
 const getCategorias = async (req, res) => {
@@ -6,9 +18,9 @@ const getCategorias = async (req, res) => {
     return {
       id: categoria._id,
       nombre: categoria.nombre,
+      genero: categoria.genero,
       minEdad: categoria.minEdad,
-      maxEdad: categoria.maxEdad,
-      genero: categoria.genero
+      maxEdad: categoria.maxEdad
     }
   })
 
@@ -25,7 +37,11 @@ const createCategoria = async (req, res) => {
     }
     // Si minEdad o maxEdad no son numeros se lanza un error
     if (isNaN(minEdad) || isNaN(maxEdad)) {
-      error = 'La edad minima y maxima deben ser numeros'
+      error =
+        'La edad minima y maxima deben ser numeros, edad minima: ' +
+        typeof minEdad +
+        ', edad maxima: ' +
+        typeof maxEdad
     }
     minEdad = parseInt(minEdad)
     maxEdad = parseInt(maxEdad)
@@ -45,7 +61,14 @@ const createCategoria = async (req, res) => {
     } else {
       const newCategoria = new Categoria({ nombre, minEdad, maxEdad, genero })
       const categoriaSaved = await newCategoria.save()
-      res.status(201).json(categoriaSaved)
+      res.status(201).json({
+        message: 'Categoria creada correctamente',
+        id: categoriaSaved._id,
+        nombre: categoriaSaved.nombre,
+        minEdad: categoriaSaved.minEdad,
+        maxEdad: categoriaSaved.maxEdad,
+        genero: categoriaSaved.genero
+      })
     }
   } catch (error) {
     console.info('error', error)
