@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { getArbitros } from '../controllers/arbitro.controller.js'
 const router = Router()
 
 router.get('/', getArbitros)
