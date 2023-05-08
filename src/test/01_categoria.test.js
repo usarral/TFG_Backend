@@ -74,7 +74,6 @@ describe('Tests de API de Categoria', () => {
       maxEdad: 99
     })
   })
-  test('Test Obtener Categoria por ID No Valido', async () => {})
   test('Test Modificar Categoria por ID', async () => {
     const options = {
       method: 'PUT',
