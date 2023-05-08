@@ -1,5 +1,29 @@
 import { Router } from 'express'
 const router = Router()
+import {
+  createJugador,
+  getJugadorById,
+  getJugadores,
+  updateJugador,
+  deleteJugadorById
+} from '../controllers/jugador.controller.js'
+
+// GET all jugadores
+router.get('/', getJugadores)
+
+// GET a jugador by id
+
+router.get('/:id', getJugadorById)
+
+// CREATE a jugador
+router.post('/', createJugador)
+
+// UPDATE a jugador
+router.put('/:id', updateJugador)
+
+// DELETE a jugador
+
+router.delete('/:id', deleteJugadorById)
 
 // 404 error
 router.use((req, res) => {

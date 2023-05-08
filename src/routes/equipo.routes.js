@@ -1,5 +1,27 @@
 import { Router } from 'express'
 const router = Router()
+import {
+  createEquipo,
+  getEquipos,
+  getEquipo,
+  deleteEquipo,
+  updateEquipo
+} from '../controllers/equipo.controller.js'
+
+// GET: Return all equipos
+router.get('/', getEquipos)
+
+// GET: Return equipo by id
+router.get('/:id', getEquipo)
+
+// POST: Create a new equipo
+router.post('/', createEquipo)
+
+// DELETE: Delete equipo by id
+router.delete('/:id', deleteEquipo)
+
+// PUT: Update equipo by id
+router.put('/:id', updateEquipo)
 
 // 404 error
 router.use((req, res) => {
