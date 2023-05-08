@@ -57,7 +57,7 @@ const createArbitro = async (req, res) => {
   })
 }
 const getArbitros = async (req, res) => {
-  let arbitros = await Arbitro.find()
+  const arbitros = await Arbitro.find()
   res.status(200).json(
     arbitros.map(arbitro => {
       return {
@@ -71,7 +71,7 @@ const getArbitros = async (req, res) => {
   )
 }
 const getArbitroById = async (req, res) => {
-  let arbitro = await Arbitro.findById(req.params.id)
+  const arbitro = await Arbitro.findById(req.params.id)
   if (!arbitro) {
     res.status(404).json({ message: 'Arbitro no encontrado' })
     return
@@ -141,7 +141,7 @@ const updateArbitroById = async (req, res) => {
   })
 }
 const deleteArbitroById = async (req, res) => {
-  let arbitro = await Arbitro.findById(req.params.id)
+  const arbitro = await Arbitro.findById(req.params.id)
   if (!arbitro) {
     res.status(404).json({ message: 'Arbitro no encontrado' })
     return

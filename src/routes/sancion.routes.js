@@ -1,5 +1,4 @@
 import { Router } from 'express'
-const router = Router()
 import {
   createSancion,
   getSanciones,
@@ -7,6 +6,7 @@ import {
   deleteSancion,
   getSancionById
 } from '../controllers/sancion.controller.js'
+const router = Router()
 
 // /api/sancion
 router.post('/', createSancion)

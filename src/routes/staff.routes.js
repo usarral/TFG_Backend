@@ -1,5 +1,4 @@
 import { Router } from 'express'
-const router = Router()
 import {
   getStaffs,
   getStaffById,
@@ -7,6 +6,7 @@ import {
   deleteStaff,
   updateStaff
 } from '../controllers/staff.controller.js'
+const router = Router()
 
 // GET /staffs
 router.get('/', getStaffs)

@@ -1,5 +1,4 @@
 import { Router } from 'express'
-const router = Router()
 import {
   createJugador,
   getJugadorById,
@@ -7,6 +6,7 @@ import {
   updateJugador,
   deleteJugadorById
 } from '../controllers/jugador.controller.js'
+const router = Router()
 
 // GET all jugadores
 router.get('/', getJugadores)

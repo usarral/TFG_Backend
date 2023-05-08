@@ -1,5 +1,4 @@
 import { Router } from 'express'
-const router = Router()
 import {
   createEquipo,
   getEquipos,
@@ -7,6 +6,7 @@ import {
   deleteEquipo,
   updateEquipo
 } from '../controllers/equipo.controller.js'
+const router = Router()
 
 // GET: Return all equipos
 router.get('/', getEquipos)
