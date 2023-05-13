@@ -101,7 +101,6 @@ const getCategoriaById = async (req, res) => {
         error:
           'Error al buscar la categoria, revisa el id enviado o prueba mas tarde'
       })
-      return
     })
 }
 const updateCategoriaById = async (req, res) => {
@@ -135,13 +134,11 @@ const updateCategoriaById = async (req, res) => {
           error:
             'Error al actualizar la categoria, revisa que los datos sean correctos'
         })
-        return
       } else {
         res.status(500).json({
           error:
             'Error al actualizar la categoria, revisa el id enviado o prueba mas tarde'
         })
-        return
       }
     })
 }
@@ -165,7 +162,6 @@ const deleteCategoriaById = async (req, res) => {
         error:
           'Error al eliminar la categoria, revisa el id enviado o prueba mas tarde'
       })
-      return
     })
 }
 

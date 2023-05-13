@@ -73,7 +73,7 @@ const updateStaff = async (req, res) => {
   }
 }
 const deleteStaff = async (req, res) => {
-  let id = req.params.id
+  const id = req.params.id
   try {
     await Staff.findByIdAndDelete(id)
     res.json({
