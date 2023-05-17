@@ -8,7 +8,7 @@ const pabellonSchema = new Schema({
     type: String,
     required: true
   },
-  municipioPabellon: {
+  ciudadPabellon: {
     type: String,
     required: true
   },

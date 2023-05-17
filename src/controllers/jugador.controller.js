@@ -1,14 +1,27 @@
 import Jugador from '../models/jugador.model.js'
 
 const getJugadores = async (req, res) => {
-  try {
-    const jugadores = await Jugador.find()
-    res.json(jugadores)
-  } catch (error) {
-    res.json({
-      message: error
-    })
+  let jugadores = await Jugador.find()
+  if (jugadores.length === 0) {
+    res.status(404).json({ message: 'No hay jugadores' })
+    return
   }
+  jugadores = jugadores.map(jugador => {
+    return {
+      id: jugador._id,
+      foto: jugador.fotoJugador,
+      nombre: jugador.nombreJugador,
+      apellido: jugador.apellidoJugador,
+      apellido2: jugador.apellido2Jugador,
+      DNI: jugador.dniJugador,
+      fechaNacimiento: jugador.fechaNacimientoJugador,
+      email: jugador.emailJugador
+    }
+  })
+  res.status(200).json({
+    message: 'Jugadores encontrados',
+    data: jugadores
+  })
 }
 const createJugador = async (req, res) => {
   const jugador = new Jugador({
@@ -19,13 +32,14 @@ const createJugador = async (req, res) => {
     telefonoJugador: req.body.telefono,
     emailJugador: req.body.email,
     direccionJugador: req.body.direccion,
-    municipioJugador: req.body.municipio,
+    ciudadJugador: req.body.ciudad,
     provinciaJugador: req.body.provincia,
     CPJugador: req.body.CP,
     fechaNacimientoJugador: req.body.fechaNacimiento,
     categoriaJugador: req.body.categoria,
     clubJugador: req.body.club,
-    equipoJugador: req.body.equipo
+    equipoJugador: req.body.equipo,
+    fotoJugador: req.body.foto
   })
   try {
     const savedJugador = await jugador.save()
@@ -57,7 +71,7 @@ const updateJugador = async (req, res) => {
     jugador.telefonoJugador = req.body.telefono
     jugador.emailJugador = req.body.email
     jugador.direccionJugador = req.body.direccion
-    jugador.municipioJugador = req.body.municipio
+    jugador.ciudadJugador = req.body.ciudad
     jugador.provinciaJugador = req.body.provincia
     jugador.CPJugador = req.body.CP
     jugador.fechaNacimientoJugador = req.body.fechaNacimiento

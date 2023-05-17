@@ -2,14 +2,24 @@ import Equipo from '../models/equipo.model.js'
 
 // GET: Return all equipos
 const getEquipos = async (req, res) => {
-  try {
-    const equipos = await Equipo.find()
-    res.json(equipos)
-  } catch (error) {
-    res.json({
-      message: error
-    })
+  let equipos = await Equipo.find()
+  if (equipos.length === 0) {
+    res.status(404).json({ message: 'No hay equipos' })
+    return
   }
+  equipos = equipos.map(equipo => {
+    return {
+      id: equipo._id,
+      escudo: equipo.escudoEquipo,
+      nombre: equipo.nombreEquipo,
+      email: equipo.emailEquipo,
+      telefono: equipo.telefonoEquipo
+    }
+  })
+  res.status(200).json({
+    message: 'Equipos encontrados',
+    data: equipos
+  })
 }
 const getEquipo = async (req, res) => {
   try {
@@ -30,7 +40,7 @@ const createEquipo = async (req, res) => {
     emailEquipo: req.body.email,
     telefonoEquipo: req.body.telefono,
     direccionEquipo: req.body.direccion,
-    municipioEquipo: req.body.municipio,
+    ciudadEquipo: req.body.ciudad,
     provinciaEquipo: req.body.provincia,
     CPEquipo: req.body.CP,
     escudoEquipo: req.body.escudo,
@@ -47,11 +57,10 @@ const createEquipo = async (req, res) => {
 }
 // DELETE: Delete equipo by id
 const deleteEquipo = async (req, res) => {
+  const id = req.params.id
   try {
-    const removedEquipo = await Equipo.deleteOne({
-      _id: req.params.id
-    })
-    res.json(removedEquipo)
+    await Equipo.deleteOne({ _id: id })
+    res.status(200).json({ message: 'Deleted equipo', id: id })
   } catch (error) {
     res.json({
       message: error
@@ -60,17 +69,22 @@ const deleteEquipo = async (req, res) => {
 }
 
 const updateEquipo = async (req, res) => {
+  const id = req.params.id
+  const equipo = {
+    nombreEquipo: req.body.nombre,
+    categoriaEquipo: req.body.categoria,
+    responsableEquipo: req.body.responsable,
+    emailEquipo: req.body.email,
+    telefonoEquipo: req.body.telefono,
+    direccionEquipo: req.body.direccion,
+    ciudadEquipo: req.body.ciudad,
+    provinciaEquipo: req.body.provincia,
+    CPEquipo: req.body.CP,
+    escudoEquipo: req.body.escudo,
+    clubEquipo: req.body.club
+  }
   try {
-    const updatedEquipo = await Equipo.updateOne(
-      { _id: req.params.id },
-      {
-        $set: {
-          nombre: req.body.nombre,
-          escudo: req.body.escudo,
-          jugadores: req.body.jugadores
-        }
-      }
-    )
+    const updatedEquipo = await Equipo.updateOne({ _id: id }, { $set: equipo })
     res.json(updatedEquipo)
   } catch (error) {
     res.json({

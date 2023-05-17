@@ -1,59 +1,59 @@
 import { Schema, model } from 'mongoose'
 
 const clubSchema = new Schema({
-  nombre: {
+  nombreClub: {
     type: String,
     required: true
   },
-  NIF: {
+  NIFClub: {
     type: String,
     required: true
   },
 
-  direccion: {
+  direccionClub: {
     type: String
   },
-  municipio: {
+  ciudadClub: {
     type: String
   },
-  provincia: {
+  provinciaClub: {
     type: String
   },
-  CP: {
+  CPClub: {
     type: Number
   },
-  telefono: {
+  telefonoClub: {
     type: String
   },
-  email: {
+  emailClub: {
     type: String
   },
-  web: {
+  webClub: {
     type: String
   },
-  escudo: {
+  escudoClub: {
     type: String
   },
-  fechaAlta: {
+  fechaAltaClub: {
     type: Date,
     default: Date.now
   },
-  fechaBaja: {
+  fechaBajaClub: {
     type: Date || null
   },
   // El responsable del club es un usuario de staff
-  responsable: {
+  responsableClub: {
     type: Schema.Types.ObjectId,
     ref: 'Staff'
   },
   // Los equipos del club son un array de objetos de tipo equipo
-  equipos: [
+  equiposClub: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Equipo'
     }
   ],
-  sanciones: [
+  sancionesClub: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Sancion'

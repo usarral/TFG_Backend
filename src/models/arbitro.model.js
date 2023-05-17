@@ -30,7 +30,7 @@ const arbitroSchema = new Schema({
   direccionArbitro: {
     type: String
   },
-  municipioArbitro: {
+  ciudadArbitro: {
     type: String
   },
   provinciaArbitro: {
@@ -54,6 +54,11 @@ const arbitroSchema = new Schema({
   },
   fechaBajaArbitro: {
     type: Date || null
+  },
+  estadoArbitro: {
+    type: String,
+    enum: ['Pendiente', 'Activo', 'Inactivo'],
+    default: 'Pendiente'
   }
 })
 

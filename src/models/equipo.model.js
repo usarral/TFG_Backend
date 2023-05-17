@@ -21,7 +21,7 @@ const equipoSchema = new Schema({
   direccionEquipo: {
     type: String
   },
-  municipioEquipo: {
+  ciudadEquipo: {
     type: String
   },
   provinciaEquipo: {

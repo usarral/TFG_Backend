@@ -29,7 +29,7 @@ const jugadorSchema = new Schema(
       type: String,
       required: true
     },
-    municipioJugador: {
+    ciudadJugador: {
       type: String,
       required: true
     },
@@ -45,6 +45,10 @@ const jugadorSchema = new Schema(
     fechaNacimientoJugador: {
       type: Date,
       required: true
+    },
+    fotoJugador: {
+      type: String,
+      required: false
     }
   },
   {

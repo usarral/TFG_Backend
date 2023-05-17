@@ -29,7 +29,6 @@ const getCategorias = async (req, res) => {
 const createCategoria = async (req, res) => {
   let error = ''
   try {
-    console.info('req.body', req.body.nombre)
     let { nombre, minEdad, maxEdad, genero } = req.body
     // Si nombre, minEdad, maxEdad o genero no existen se lanza un error
     if (!nombre || !minEdad || !maxEdad || !genero) {
@@ -82,7 +81,7 @@ const getCategoriaById = async (req, res) => {
   await Categoria.findById(id)
     .then(categoria => {
       if (!categoria) {
-        res.status(404).json({ error: 'Categoria no encontrada' })
+        res.status(404).json({ message: 'Categoria no encontrada' })
         return
       }
 
@@ -98,7 +97,7 @@ const getCategoriaById = async (req, res) => {
       console.error('Error al buscar la categoria', error)
 
       res.status(500).json({
-        error:
+        message:
           'Error al buscar la categoria, revisa el id enviado o prueba mas tarde'
       })
     })
@@ -108,7 +107,7 @@ const updateCategoriaById = async (req, res) => {
   const { nombre, minEdad, maxEdad, genero } = req.body
   const categoria = await Categoria.findById(id)
   if (!categoria) {
-    res.status(404).json({ error: 'Categoria no encontrada' })
+    res.status(404).json({ message: 'Categoria no encontrada' })
     return
   }
   categoria.nombre = nombre || categoria.nombre
@@ -131,12 +130,12 @@ const updateCategoriaById = async (req, res) => {
       // Si error _message dice 'Validation failed' es porque algun campo no cumple con las validaciones
       if (error._message === 'Categoria validation failed') {
         res.status(400).json({
-          error:
+          message:
             'Error al actualizar la categoria, revisa que los datos sean correctos'
         })
       } else {
         res.status(500).json({
-          error:
+          message:
             'Error al actualizar la categoria, revisa el id enviado o prueba mas tarde'
         })
       }
@@ -147,7 +146,7 @@ const deleteCategoriaById = async (req, res) => {
   await Categoria.findByIdAndDelete(id)
     .then(categoria => {
       if (!categoria) {
-        res.status(404).json({ error: 'Categoria no encontrada' })
+        res.status(404).json({ message: 'Categoria no encontrada' })
         return
       }
 
@@ -159,7 +158,7 @@ const deleteCategoriaById = async (req, res) => {
       console.error('Error al eliminar la categoria', error)
 
       res.status(500).json({
-        error:
+        message:
           'Error al eliminar la categoria, revisa el id enviado o prueba mas tarde'
       })
     })
