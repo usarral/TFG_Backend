@@ -23,9 +23,7 @@ const getArbitros = async (req, res) => {
   arbitros = arbitros.map(arbitro => {
     return {
       id: arbitro._id,
-      foto:
-        arbitro.fotoArbitro ||
-        `https://ui-avatars.com/api/?name=${arbitro.nombreArbitro}+${arbitro.apellidoArbitro}&background=random`,
+      foto: arbitro.fotoArbitro,
       nombre: arbitro.nombreArbitro,
       apellido: arbitro.apellidoArbitro,
       apellido2: arbitro.apellido2Arbitro,
@@ -98,7 +96,9 @@ const createArbitro = async (req, res) => {
     provinciaArbitro: provincia,
     CPArbitro: CP,
     estadoArbitro: estado || 'Pendiente',
-    fotoArbitro: foto
+    fotoArbitro:
+      foto ||
+      `https://ui-avatars.com/api/?name=${nombre}+${apellido}&background=random`
   })
   try {
     const arbitroCreado = await arbitro.save()
