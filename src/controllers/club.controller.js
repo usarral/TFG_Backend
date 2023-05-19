@@ -27,25 +27,26 @@ const getClub = async (req, res) => {
   const { id } = req.params
   const club = await Club.findById(id)
   if (!club) {
-    res.status(404).json({ message: 'Club no encontrado' })
+    res.status(200).json({ message: 'Club no encontrado' })
     return
   }
+
   res.status(200).json({
     message: 'Club encontrado',
     data: {
       id: club._id,
-      nombre: club.nombre,
-      NIF: club.NIF,
-      direccion: club.direccion,
-      ciudad: club.ciudad,
-      provincia: club.provincia,
-      CP: club.CP,
-      telefono: club.telefono,
-      email: club.email,
-      web: club.web,
-      equipos: club.equipos,
-      sanciones: club.sanciones,
-      escudo: club.escudo
+      nombre: club.nombreClub,
+      NIF: club.NIFClub,
+      direccion: club.direccionClub,
+      ciudad: club.ciudadClub,
+      provincia: club.provinciaClub,
+      CP: club.CPClub,
+      telefono: club.telefonoClub,
+      email: club.emailClub,
+      web: club.webClub,
+      equipos: club.equiposClub,
+      sanciones: club.sancionesClub,
+      escudo: club.escudoClub
     }
   })
 }
@@ -83,16 +84,16 @@ const createClub = async (req, res) => {
       message: 'Club creado',
       data: {
         id: clubCreado._id,
-        nombre: clubCreado.nombre,
-        NIF: clubCreado.NIF,
-        direccion: clubCreado.direccion,
-        ciudad: clubCreado.ciudad,
-        provincia: clubCreado.provincia,
-        CP: clubCreado.CP,
-        telefono: clubCreado.telefono,
-        email: clubCreado.email,
-        web: clubCreado.web,
-        escudo: clubCreado.escudo
+        nombre: clubCreado.nombreClub,
+        NIF: clubCreado.NIFClub,
+        direccion: clubCreado.direccionClub,
+        ciudad: clubCreado.ciudadClub,
+        provincia: clubCreado.provinciaClub,
+        CP: clubCreado.CPClub,
+        telefono: clubCreado.telefonoClub,
+        email: clubCreado.emailClub,
+        web: clubCreado.webClub,
+        escudo: clubCreado.escudoClub
       }
     })
   } catch (error) {
@@ -118,32 +119,32 @@ const updateClub = async (req, res) => {
     res.status(404).json({ message: 'Club no encontrado' })
     return
   }
-  club.nombre = nombre
-  club.NIF = NIF
-  club.direccion = direccion
-  club.ciudad = ciudad
-  club.provincia = provincia
-  club.CP = CP
-  club.telefono = telefono
-  club.email = email
-  club.web = web
-  club.escudo = escudo
+  club.nombreClub = nombre
+  club.NIFClub = NIF
+  club.direccionClub = direccion
+  club.ciudadClub = ciudad
+  club.provinciaClub = provincia
+  club.CPClub = CP
+  club.telefonoClub = telefono
+  club.emailClub = email
+  club.webClub = web
+  club.escudoClub = escudo
   try {
     const clubActualizado = await club.save()
     res.status(200).json({
       message: 'Club actualizado',
       data: {
         id: clubActualizado._id,
-        nombre: clubActualizado.nombre,
-        NIF: clubActualizado.NIF,
-        direccion: clubActualizado.direccion,
-        ciudad: clubActualizado.ciudad,
-        provincia: clubActualizado.provincia,
-        CP: clubActualizado.CP,
-        telefono: clubActualizado.telefono,
-        email: clubActualizado.email,
-        web: clubActualizado.web,
-        escudo: clubActualizado.escudo
+        nombre: clubActualizado.nombreClub,
+        NIF: clubActualizado.NIFClub,
+        direccion: clubActualizado.direccionClub,
+        ciudad: clubActualizado.ciudadClub,
+        provincia: clubActualizado.provinciaClub,
+        CP: clubActualizado.CPClub,
+        telefono: clubActualizado.telefonoClub,
+        email: clubActualizado.emailClub,
+        web: clubActualizado.webClub,
+        escudo: clubActualizado.escudoClub
       }
     })
   } catch (error) {

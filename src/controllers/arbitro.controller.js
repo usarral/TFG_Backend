@@ -17,7 +17,7 @@ import Arbitro from '../models/arbitro.model.js'
 const getArbitros = async (req, res) => {
   let arbitros = await Arbitro.find()
   if (arbitros.length === 0) {
-    res.status(404).json({ message: 'No hay arbitros' })
+    res.status(200).json({ message: 'No hay arbitros' })
     return
   }
   arbitros = arbitros.map(arbitro => {
@@ -98,7 +98,10 @@ const createArbitro = async (req, res) => {
     estadoArbitro: estado || 'Pendiente',
     fotoArbitro:
       foto ||
-      `https://ui-avatars.com/api/?name=${nombre}+${apellido}&background=random`
+      `https://ui-avatars.com/api/?name=${nombre.substring(
+        0,
+        1
+      )}+${apellido.substring(0, 1)}&background=random`
   })
   try {
     const arbitroCreado = await arbitro.save()
@@ -117,7 +120,13 @@ const createArbitro = async (req, res) => {
         ciudad: arbitroCreado.ciudadArbitro,
         provincia: arbitroCreado.provinciaArbitro,
         CP: arbitroCreado.CPArbitro,
-        foto: arbitroCreado.fotoArbitro,
+        foto:
+          arbitroCreado.fotoArbitro ||
+          'https://ui-avatars.com/api/?name=' +
+            arbitroCreado.nombreArbitro +
+            '+' +
+            arbitroCreado.apellidoArbitro +
+            '&background=random',
         partidos: arbitroCreado.partidosArbitro,
         fechaAlta: arbitroCreado.fechaAltaArbitro
       }
@@ -149,20 +158,24 @@ const updateArbitro = async (req, res) => {
     res.status(404).json({ message: 'Arbitro no encontrado' })
     return
   }
-  arbitro.nombreArbitro = nombre
-  arbitro.apellidoArbitro = apellido
-  arbitro.apellido2Arbitro = apellido2
-  arbitro.DNIArbitro = DNI
-  arbitro.telefonoArbitro = telefono
-  arbitro.emailArbitro = email
-  arbitro.fechaNacimientoArbitro = fechaNacimiento
-  arbitro.direccionArbitro = direccion
-  arbitro.ciudadArbitro = ciudad
-  arbitro.provinciaArbitro = provincia
-  arbitro.CPArbitro = CP
-  arbitro.fotoArbitro = foto
+  console.log(req.body)
+
+  arbitro.nombreArbitro = nombre || arbitro.nombreArbitro
+  arbitro.apellidoArbitro = apellido || arbitro.apellidoArbitro
+  arbitro.apellido2Arbitro = apellido2 || arbitro.apellido2Arbitro
+  arbitro.DNIArbitro = DNI || arbitro.DNIArbitro
+  arbitro.telefonoArbitro = telefono || arbitro.telefonoArbitro
+  arbitro.emailArbitro = email || arbitro.emailArbitro
+  arbitro.fechaNacimientoArbitro =
+    fechaNacimiento || arbitro.fechaNacimientoArbitro
+  arbitro.direccionArbitro = direccion || arbitro.direccionArbitro
+  arbitro.ciudadArbitro = ciudad || arbitro.ciudadArbitro
+  arbitro.provinciaArbitro = provincia || arbitro.provinciaArbitro
+  arbitro.CPArbitro = CP || arbitro.CPArbitro
+  arbitro.fotoArbitro = foto || arbitro.fotoArbitro
+
   try {
-    arbitroActualizado = await arbitro.save()
+    const arbitroActualizado = await arbitro.save()
     res.status(200).json({
       message: 'Arbitro actualizado',
       data: {
@@ -183,8 +196,11 @@ const updateArbitro = async (req, res) => {
         fechaAlta: arbitroActualizado.fechaAltaArbitro
       }
     })
+    return
   } catch (err) {
-    res.status(400).json({ message: 'Error actualizando el arbitro' })
+    res
+      .status(400)
+      .json({ message: 'Error actualizando el arbitro', error: err })
     return
   }
 }

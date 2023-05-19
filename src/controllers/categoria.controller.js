@@ -14,65 +14,51 @@ import Categoria from '../models/categoria.model.js'
 
 const getCategorias = async (req, res) => {
   let categorias = await Categoria.find()
+  if (categorias.length === 0) {
+    res.status(200).json({ message: 'No hay categorias' })
+    return
+  }
+
   categorias = categorias.map(categoria => {
     return {
       id: categoria._id,
-      nombre: categoria.nombre,
-      genero: categoria.genero,
-      minEdad: categoria.minEdad,
-      maxEdad: categoria.maxEdad
+      nombre: categoria.nombreCategoria,
+      genero: categoria.generoCategoria,
+      minEdad: categoria.minEdadCategoria,
+      maxEdad: categoria.maxEdadCategoria
     }
   })
 
-  res.status(200).json(categorias)
+  res.status(200).json({
+    message: 'Categorias encontradas',
+    data: categorias
+  })
 }
 const createCategoria = async (req, res) => {
-  let error = ''
+  const { nombre, genero, minEdad, maxEdad } = req.body
+  const categoria = new Categoria({
+    nombreCategoria: nombre,
+    generoCategoria: genero,
+    minEdadCategoria: minEdad,
+    maxEdadCategoria: maxEdad
+  })
   try {
-    let { nombre, minEdad, maxEdad, genero } = req.body
-    // Si nombre, minEdad, maxEdad o genero no existen se lanza un error
-    if (!nombre || !minEdad || !maxEdad || !genero) {
-      error = 'nombre, minEdad, maxEdad y genero son requeridos'
-    }
-    // Si minEdad o maxEdad no son numeros se lanza un error
-    if (isNaN(minEdad) || isNaN(maxEdad)) {
-      error =
-        'La edad minima y maxima deben ser numeros, edad minima: ' +
-        typeof minEdad +
-        ', edad maxima: ' +
-        typeof maxEdad
-    }
-    minEdad = parseInt(minEdad)
-    maxEdad = parseInt(maxEdad)
-
-    // Si minEdad es mayor a maxEdad se lanza un error
-    if (minEdad > maxEdad) {
-      error = 'La edad minima no puede ser mayor a la edad maxima'
-    }
-    genero = genero.toUpperCase()
-    // Si genero no es M, F o O se lanza un error
-    if (genero !== 'M' && genero !== 'F' && genero !== 'X') {
-      error = 'El genero debe ser X, M o F'
-    }
-    if (error) {
-      res.status(400).json({ error })
-      return
-    } else {
-      const newCategoria = new Categoria({ nombre, minEdad, maxEdad, genero })
-      const categoriaSaved = await newCategoria.save()
-      res.status(201).json({
-        message: 'Categoria creada correctamente',
-        id: categoriaSaved._id,
-        nombre: categoriaSaved.nombre,
-        minEdad: categoriaSaved.minEdad,
-        maxEdad: categoriaSaved.maxEdad,
-        genero: categoriaSaved.genero
-      })
-    }
+    const categoriaCreada = await categoria.save()
+    res.status(201).json({
+      message: 'Categoria creada correctamente',
+      data: {
+        id: categoriaCreada._id,
+        nombre: categoriaCreada.nombreCategoria,
+        genero: categoriaCreada.generoCategoria,
+        minEdad: categoriaCreada.minEdadCategoria,
+        maxEdad: categoriaCreada.maxEdadCategoria
+      }
+    })
   } catch (error) {
-    console.info('error', error)
-
-    res.status(500).json({ error })
+    res.status(400).json({
+      message: 'Error al crear la categoria'
+    })
+    return
   }
 }
 const getCategoriaById = async (req, res) => {
@@ -86,11 +72,14 @@ const getCategoriaById = async (req, res) => {
       }
 
       res.status(200).json({
-        id: categoria._id,
-        nombre: categoria.nombre,
-        minEdad: categoria.minEdad,
-        maxEdad: categoria.maxEdad,
-        genero: categoria.genero
+        message: 'Categoria encontrada',
+        data: {
+          id: categoria._id,
+          nombre: categoria.nombreCategoria,
+          minEdad: categoria.minEdadCategoria,
+          maxEdad: categoria.maxEdadCategoria,
+          genero: categoria.generoCategoria
+        }
       })
     })
     .catch(error => {
@@ -110,10 +99,10 @@ const updateCategoriaById = async (req, res) => {
     res.status(404).json({ message: 'Categoria no encontrada' })
     return
   }
-  categoria.nombre = nombre || categoria.nombre
-  categoria.minEdad = minEdad || categoria.minEdad
-  categoria.maxEdad = maxEdad || categoria.maxEdad
-  categoria.genero = genero || categoria.genero
+  categoria.nombreCategoria = nombre || categoria.nombreCategoria
+  categoria.minEdadCategoria = minEdad || categoria.minEdadCategoria
+  categoria.maxEdadCategoria = maxEdad || categoria.maxEdadCategoria
+  categoria.generoCategoria = genero || categoria.generoCategoria
   await categoria
     .save()
     .then(categoria => {
