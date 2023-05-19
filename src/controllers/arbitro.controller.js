@@ -14,40 +14,50 @@
 */
 
 import Arbitro from '../models/arbitro.model.js'
-const createArbitro = async (req, res) => {
-  let arbitro = new Arbitro({
-    nombreArbitro: req.body.nombre,
-    apellidoArbitro: req.body.apellido,
-    apellido2Arbitro: req.body.apellido2,
-    DNIArbitro: req.body.DNI,
-    telefonoArbitro: req.body.telefono,
-    emailArbitro: req.body.email,
-    fechaNacimientoArbitro: req.body.fechaNacimiento,
-    direccionArbitro: req.body.direccion,
-    municipioArbitro: req.body.municipio,
-    provinciaArbitro: req.body.provincia,
-    CPArbitro: req.body.CP,
-    fotoArbitro: req.body.foto
-  })
-  try {
-    arbitro = await arbitro.save()
-  } catch (err) {
-    res.status(400).json(err)
+const getArbitros = async (req, res) => {
+  let arbitros = await Arbitro.find()
+  if (arbitros.length === 0) {
+    res.status(200).json({ message: 'No hay arbitros' })
     return
   }
-  res.status(201).json({
-    message: 'Arbitro creado correctamente',
-    arbitro: {
+  arbitros = arbitros.map(arbitro => {
+    return {
+      id: arbitro._id,
+      foto: arbitro.fotoArbitro,
+      nombre: arbitro.nombreArbitro,
+      apellido: arbitro.apellidoArbitro,
+      apellido2: arbitro.apellido2Arbitro,
+      DNI: arbitro.DNIArbitro,
+      fechaNacimiento: arbitro.fechaNacimientoArbitro,
+      estado: arbitro.estadoArbitro
+    }
+  })
+  res.status(200).json({
+    message: 'Arbitros encontrados',
+    data: arbitros
+  })
+}
+
+const getArbitro = async (req, res) => {
+  const { id } = req.params
+  const arbitro = await Arbitro.findById(id)
+  if (!arbitro) {
+    res.status(404).json({ message: 'Arbitro no encontrado' })
+    return
+  }
+  res.status(200).json({
+    message: 'Arbitro encontrado',
+    data: {
       id: arbitro._id,
       nombre: arbitro.nombreArbitro,
       apellido: arbitro.apellidoArbitro,
       apellido2: arbitro.apellido2Arbitro,
-      fechaNacimiento: arbitro.fechaNacimientoArbitro,
       DNI: arbitro.DNIArbitro,
       telefono: arbitro.telefonoArbitro,
       email: arbitro.emailArbitro,
+      fechaNacimiento: arbitro.fechaNacimientoArbitro,
       direccion: arbitro.direccionArbitro,
-      municipio: arbitro.municipioArbitro,
+      ciudad: arbitro.ciudadArbitro,
       provincia: arbitro.provinciaArbitro,
       CP: arbitro.CPArbitro,
       foto: arbitro.fotoArbitro,
@@ -56,111 +66,158 @@ const createArbitro = async (req, res) => {
     }
   })
 }
-const getArbitros = async (req, res) => {
-  const arbitros = await Arbitro.find()
-  res.status(200).json(
-    arbitros.map(arbitro => {
-      return {
-        id: arbitro._id,
-        nombre: arbitro.nombreArbitro,
-        apellido: arbitro.apellidoArbitro,
-        apellido2: arbitro.apellido2Arbitro,
-        foto: arbitro.fotoArbitro
+
+const createArbitro = async (req, res) => {
+  const {
+    nombre,
+    apellido,
+    apellido2,
+    DNI,
+    telefono,
+    email,
+    fechaNacimiento,
+    direccion,
+    ciudad,
+    provincia,
+    CP,
+    estado,
+    foto
+  } = req.body
+  const arbitro = new Arbitro({
+    nombreArbitro: nombre,
+    apellidoArbitro: apellido,
+    apellido2Arbitro: apellido2,
+    DNIArbitro: DNI,
+    telefonoArbitro: telefono,
+    emailArbitro: email,
+    fechaNacimientoArbitro: fechaNacimiento,
+    direccionArbitro: direccion,
+    ciudadArbitro: ciudad,
+    provinciaArbitro: provincia,
+    CPArbitro: CP,
+    estadoArbitro: estado || 'Pendiente',
+    fotoArbitro:
+      foto ||
+      `https://ui-avatars.com/api/?name=${nombre.substring(
+        0,
+        1
+      )}+${apellido.substring(0, 1)}&background=random`
+  })
+  try {
+    const arbitroCreado = await arbitro.save()
+    res.status(201).json({
+      message: 'Arbitro creado',
+      data: {
+        id: arbitroCreado._id,
+        nombre: arbitroCreado.nombreArbitro,
+        apellido: arbitroCreado.apellidoArbitro,
+        apellido2: arbitroCreado.apellido2Arbitro,
+        DNI: arbitroCreado.DNIArbitro,
+        telefono: arbitroCreado.telefonoArbitro,
+        email: arbitroCreado.emailArbitro,
+        fechaNacimiento: arbitroCreado.fechaNacimientoArbitro,
+        direccion: arbitroCreado.direccionArbitro,
+        ciudad: arbitroCreado.ciudadArbitro,
+        provincia: arbitroCreado.provinciaArbitro,
+        CP: arbitroCreado.CPArbitro,
+        foto:
+          arbitroCreado.fotoArbitro ||
+          'https://ui-avatars.com/api/?name=' +
+            arbitroCreado.nombreArbitro +
+            '+' +
+            arbitroCreado.apellidoArbitro +
+            '&background=random',
+        partidos: arbitroCreado.partidosArbitro,
+        fechaAlta: arbitroCreado.fechaAltaArbitro
       }
     })
-  )
-}
-const getArbitroById = async (req, res) => {
-  const arbitro = await Arbitro.findById(req.params.id)
-  if (!arbitro) {
-    res.status(404).json({ message: 'Arbitro no encontrado' })
-    return
-  }
-  res.status(200).json({
-    id: arbitro._id,
-    nombre: arbitro.nombreArbitro,
-    apellido: arbitro.apellidoArbitro,
-    apellido2: arbitro.apellido2Arbitro,
-    fechaNacimiento: arbitro.fechaNacimientoArbitro,
-    DNI: arbitro.DNIArbitro,
-    telefono: arbitro.telefonoArbitro,
-    email: arbitro.emailArbitro,
-    direccion: arbitro.direccionArbitro,
-    municipio: arbitro.municipioArbitro,
-    provincia: arbitro.provinciaArbitro,
-    CP: arbitro.CPArbitro,
-    foto: arbitro.fotoArbitro,
-    partidos: arbitro.partidosArbitro,
-    fechaAlta: arbitro.fechaAltaArbitro
-  })
-}
-const updateArbitroById = async (req, res) => {
-  let arbitro = await Arbitro.findById(req.params.id)
-  if (!arbitro) {
-    res.status(404).json({ message: 'Arbitro no encontrado' })
-    return
-  }
-
-  arbitro.nombreArbitro = req.body.nombre
-  arbitro.apellidoArbitro = req.body.apellido
-  arbitro.apellido2Arbitro = req.body.apellido2
-  arbitro.DNIArbitro = req.body.DNI
-  arbitro.telefonoArbitro = req.body.telefono
-  arbitro.emailArbitro = req.body.email
-  arbitro.fechaNacimientoArbitro = req.body.fechaNacimiento
-  arbitro.direccionArbitro = req.body.direccion
-  arbitro.municipioArbitro = req.body.municipio
-  arbitro.provinciaArbitro = req.body.provincia
-  arbitro.CPArbitro = req.body.CP
-  arbitro.fotoArbitro = req.body.foto
-  try {
-    arbitro = await arbitro.save()
   } catch (err) {
-    res.status(400).json(err)
+    res.status(400).json({ message: 'Error creando el arbitro' })
     return
   }
-  res.status(200).json({
-    message: 'Arbitro modificado correctamente',
-    arbitro: {
-      id: arbitro._id,
-      nombre: arbitro.nombreArbitro,
-      apellido: arbitro.apellidoArbitro,
-      apellido2: arbitro.apellido2Arbitro,
-      fechaNacimiento: arbitro.fechaNacimientoArbitro,
-      DNI: arbitro.DNIArbitro,
-      telefono: arbitro.telefonoArbitro,
-      email: arbitro.emailArbitro,
-      direccion: arbitro.direccionArbitro,
-      municipio: arbitro.municipioArbitro,
-      provincia: arbitro.provinciaArbitro,
-      CP: arbitro.CPArbitro,
-      foto: arbitro.fotoArbitro,
-      partidos: arbitro.partidosArbitro,
-      fechaAlta: arbitro.fechaAltaArbitro
-    }
-  })
-}
-const deleteArbitroById = async (req, res) => {
-  const arbitro = await Arbitro.findById(req.params.id)
-  if (!arbitro) {
-    res.status(404).json({ message: 'Arbitro no encontrado' })
-    return
-  }
-  try {
-    await Arbitro.deleteOne({ _id: req.params.id })
-  } catch (err) {
-    res.status(400).json(err)
-    return
-  }
-  res.status(200).json({
-    message: 'Arbitro eliminado correctamente'
-  })
 }
 
-export {
-  createArbitro,
-  getArbitros,
-  getArbitroById,
-  updateArbitroById,
-  deleteArbitroById
+const updateArbitro = async (req, res) => {
+  const { id } = req.params
+  const {
+    nombre,
+    apellido,
+    apellido2,
+    DNI,
+    telefono,
+    email,
+    fechaNacimiento,
+    direccion,
+    ciudad,
+    provincia,
+    CP,
+    foto
+  } = req.body
+  const arbitro = await Arbitro.findById(id)
+  if (!arbitro) {
+    res.status(404).json({ message: 'Arbitro no encontrado' })
+    return
+  }
+  console.log(req.body)
+
+  arbitro.nombreArbitro = nombre || arbitro.nombreArbitro
+  arbitro.apellidoArbitro = apellido || arbitro.apellidoArbitro
+  arbitro.apellido2Arbitro = apellido2 || arbitro.apellido2Arbitro
+  arbitro.DNIArbitro = DNI || arbitro.DNIArbitro
+  arbitro.telefonoArbitro = telefono || arbitro.telefonoArbitro
+  arbitro.emailArbitro = email || arbitro.emailArbitro
+  arbitro.fechaNacimientoArbitro =
+    fechaNacimiento || arbitro.fechaNacimientoArbitro
+  arbitro.direccionArbitro = direccion || arbitro.direccionArbitro
+  arbitro.ciudadArbitro = ciudad || arbitro.ciudadArbitro
+  arbitro.provinciaArbitro = provincia || arbitro.provinciaArbitro
+  arbitro.CPArbitro = CP || arbitro.CPArbitro
+  arbitro.fotoArbitro = foto || arbitro.fotoArbitro
+
+  try {
+    const arbitroActualizado = await arbitro.save()
+    res.status(200).json({
+      message: 'Arbitro actualizado',
+      data: {
+        id: arbitroActualizado._id,
+        nombre: arbitroActualizado.nombreArbitro,
+        apellido: arbitroActualizado.apellidoArbitro,
+        apellido2: arbitroActualizado.apellido2Arbitro,
+        DNI: arbitroActualizado.DNIArbitro,
+        telefono: arbitroActualizado.telefonoArbitro,
+        email: arbitroActualizado.emailArbitro,
+        fechaNacimiento: arbitroActualizado.fechaNacimientoArbitro,
+        direccion: arbitroActualizado.direccionArbitro,
+        ciudad: arbitroActualizado.ciudadArbitro,
+        provincia: arbitroActualizado.provinciaArbitro,
+        CP: arbitroActualizado.CPArbitro,
+        foto: arbitroActualizado.fotoArbitro,
+        partidos: arbitroActualizado.partidosArbitro,
+        fechaAlta: arbitroActualizado.fechaAltaArbitro
+      }
+    })
+    return
+  } catch (err) {
+    res
+      .status(400)
+      .json({ message: 'Error actualizando el arbitro', error: err })
+    return
+  }
 }
+const deleteArbitro = async (req, res) => {
+  const { id } = req.params
+  const arbitro = await Arbitro.findById(id)
+  if (!arbitro) {
+    res.status(404).json({ message: 'Arbitro no encontrado' })
+    return
+  }
+  try {
+    await arbitro.deleteOne({ _id: id })
+    res.status(200).json({ message: 'Arbitro eliminado' })
+  } catch (err) {
+    res.status(400).json({ message: 'Error eliminando el arbitro' })
+    return
+  }
+}
+
+export { createArbitro, getArbitros, getArbitro, updateArbitro, deleteArbitro }

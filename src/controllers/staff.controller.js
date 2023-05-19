@@ -1,14 +1,31 @@
 import Staff from '../models/staff.model.js'
 
 const getStaffs = async (req, res) => {
-  try {
-    const staffs = await Staff.find()
-    res.json(staffs)
-  } catch (error) {
-    res.json({
-      message: error
+  let staffs = await Staff.find()
+  if (staffs.length === 0) {
+    res.status(404).json({
+      message: 'No hay staffs'
     })
+    return
   }
+  staffs = staffs.map(staff => {
+    return {
+      id: staff._id,
+      nombre: staff.nombreStaff,
+      apellido: staff.apellidoStaff,
+      apellido2: staff.apellido2Staff,
+      fechaNacimiento: staff.fechaNacimientoStaff,
+      DNI: staff.dniStaff,
+      email: staff.emailStaff,
+      estado: staff.estadoStaff,
+      cargo: staff.cargoStaff,
+      foto: staff.fotoStaff
+    }
+  })
+  res.status(200).json({
+    message: 'Staffs encontrados',
+    data: staffs
+  })
 }
 const createStaff = async (req, res) => {
   const staff = new Staff({
@@ -19,13 +36,14 @@ const createStaff = async (req, res) => {
     telefonoStaff: req.body.telefono,
     emailStaff: req.body.email,
     direccionStaff: req.body.direccion,
-    municipioStaff: req.body.municipio,
+    ciudadStaff: req.body.ciudad,
     provinciaStaff: req.body.provincia,
     CPStaff: req.body.CP,
     fechaNacimientoStaff: req.body.fechaNacimiento,
     cargoStaff: req.body.cargo,
     clubStaff: req.body.club,
-    equipoStaff: req.body.equipo
+    equipoStaff: req.body.equipo,
+    fotoStaff: req.body.foto
   })
   try {
     const savedStaff = await staff.save()
@@ -57,7 +75,7 @@ const updateStaff = async (req, res) => {
     staff.telefonoStaff = req.body.telefono
     staff.emailStaff = req.body.email
     staff.direccionStaff = req.body.direccion
-    staff.municipioStaff = req.body.municipio
+    staff.ciudadStaff = req.body.ciudad
     staff.provinciaStaff = req.body.provincia
     staff.CPStaff = req.body.CP
     staff.fechaNacimientoStaff = req.body.fechaNacimiento

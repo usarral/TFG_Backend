@@ -28,7 +28,7 @@ const staffSchema = new Schema({
     type: String,
     required: true
   },
-  municipioStaff: {
+  ciudadStaff: {
     type: String,
     required: true
   },
@@ -60,6 +60,9 @@ const staffSchema = new Schema({
     type: String,
     enum: ['Validado', 'Pendiente', 'Rechazado'],
     default: 'Pendiente'
+  },
+  fotoStaff: {
+    type: String
   }
 })
 export default model('Staff', staffSchema)

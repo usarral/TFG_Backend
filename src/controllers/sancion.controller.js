@@ -2,21 +2,32 @@ import Sancion from '../models/sancion.model.js'
 
 const getSanciones = async (req, res) => {
   let sanciones = await Sancion.find()
+  if (sanciones.length === 0) {
+    res.status(404).json({ message: 'No hay sanciones' })
+    return
+  }
   sanciones = sanciones.map(sancion => {
     return {
       id: sancion._id,
       arbitro: sancion.arbitroSancion,
+      tipo: sancion.tipoSancion,
       destinatario: sancion.destinatarioSancion,
-      fecha: sancion.fechaSancion
+      causa: sancion.causaSancion,
+      fecha: sancion.fechaSancion,
+      partido: sancion.partidoSancion,
+      estado: sancion.estadoSancion
     }
   })
-  res.json(sanciones)
+  res.json({
+    message: 'Sanciones encontradas',
+    data: sanciones
+  })
 }
 const getSancionById = async (req, res) => {
   const { id } = req.params
   const sancion = await Sancion.findById(id)
   if (!sancion) {
-    res.status(404).json({ error: 'Sancion no encontrada' })
+    res.status(404).json({ message: 'Sancion no encontrada' })
     return
   }
   res.json({
@@ -26,7 +37,8 @@ const getSancionById = async (req, res) => {
     destinatario: sancion.destinatarioSancion,
     causa: sancion.causaSancion,
     fecha: sancion.fechaSancion,
-    partido: sancion.partidoSancion
+    partido: sancion.partidoSancion,
+    estado: sancion.estadoSancion || 'Pendiente'
   })
 }
 const createSancion = async (req, res) => {
@@ -43,7 +55,7 @@ const createSancion = async (req, res) => {
     const sancionCreada = await sancion.save()
     res.status(201).json(sancionCreada)
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ message: error.message })
   }
 }
 const updateSancion = async (req, res) => {
@@ -51,7 +63,7 @@ const updateSancion = async (req, res) => {
   const { arbitro, tipo, destinatario, causa, fecha, partido } = req.body
   const sancion = await Sancion.findById(id)
   if (!sancion) {
-    res.status(404).json({ error: 'Sancion no encontrada' })
+    res.status(404).json({ message: 'Sancion no encontrada' })
     return
   }
   sancion.arbitroSancion = arbitro
@@ -64,20 +76,20 @@ const updateSancion = async (req, res) => {
     const sancionActualizada = await sancion.save()
     res.json(sancionActualizada)
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ message: error.message })
   }
 }
 const deleteSancion = async (req, res) => {
   const { id } = req.params
   const sancion = await Sancion.findById(id)
   if (!sancion) {
-    res.status(404).json({ error: 'Sancion no encontrada' })
+    res.status(404).json({ message: 'Sancion no encontrada' })
     return
   }
   try {
     await sancion.deleteOne({ _id: id })
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ message: error.message })
     return
   }
   res.json({ message: 'Sancion eliminada' })

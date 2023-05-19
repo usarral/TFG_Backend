@@ -1,18 +1,18 @@
 import { Router } from 'express'
 import {
   createArbitro,
-  deleteArbitroById,
-  getArbitroById,
+  deleteArbitro,
+  getArbitro,
   getArbitros,
-  updateArbitroById
+  updateArbitro
 } from '../controllers/arbitro.controller.js'
 const router = Router()
 
 router.get('/', getArbitros)
 router.post('/', createArbitro)
-router.get('/:id', getArbitroById)
-router.put('/:id', updateArbitroById)
-router.delete('/:id', deleteArbitroById)
+router.get('/:id', getArbitro)
+router.put('/:id', updateArbitro)
+router.delete('/:id', deleteArbitro)
 
 // 404 error
 router.use((req, res) => {

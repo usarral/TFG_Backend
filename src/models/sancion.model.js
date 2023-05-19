@@ -22,6 +22,10 @@ const sancionSchema = new Schema(
     partidoSancion: {
       type: Schema.Types.ObjectId,
       ref: 'Partido'
+    },
+    estadoSancion: {
+      type: String,
+      enum: ['Pendiente', 'Apelada', 'Pagada', 'Anulada']
     }
   },
   {
