@@ -1,10 +1,10 @@
 import { Schema, model } from 'mongoose'
 
 const categoriaSchema = new Schema({
-  nombre: String,
-  minEdad: Number,
-  maxEdad: Number,
-  genero: {
+  nombreCategoria: String,
+  minEdadCategoria: Number,
+  maxEdadCategoria: Number,
+  generoCategoria: {
     type: String,
     enum: ['M', 'F', 'X']
   }
