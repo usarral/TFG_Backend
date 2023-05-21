@@ -28,7 +28,7 @@ const createJugador = async (req, res) => {
     nombreJugador: req.body.nombre,
     apellidoJugador: req.body.apellido,
     apellido2Jugador: req.body.apellido2,
-    dniJugador: req.body.dni,
+    dniJugador: req.body.DNI,
     telefonoJugador: req.body.telefono,
     emailJugador: req.body.email,
     direccionJugador: req.body.direccion,
@@ -43,7 +43,10 @@ const createJugador = async (req, res) => {
   })
   try {
     const savedJugador = await jugador.save()
-    res.json(savedJugador)
+    res.json({
+      message: 'Jugador creado',
+      data: savedJugador
+    })
   } catch (error) {
     res.json({
       message: error
@@ -53,7 +56,27 @@ const createJugador = async (req, res) => {
 const getJugadorById = async (req, res) => {
   try {
     const jugador = await Jugador.findById(req.params.id)
-    res.json(jugador)
+    res.json({
+      message: 'Jugador encontrado',
+      data: {
+        id: jugador._id,
+        nombre: jugador.nombreJugador,
+        apellido: jugador.apellidoJugador,
+        apellido2: jugador.apellido2Jugador,
+        DNI: jugador.dniJugador,
+        telefono: jugador.telefonoJugador,
+        email: jugador.emailJugador,
+        direccion: jugador.direccionJugador,
+        ciudad: jugador.ciudadJugador,
+        provincia: jugador.provinciaJugador,
+        CP: jugador.CPJugador,
+        fechaNacimiento: jugador.fechaNacimientoJugador,
+        categoria: jugador.categoriaJugador,
+        club: jugador.clubJugador,
+        equipo: jugador.equipoJugador,
+        foto: jugador.fotoJugador
+      }
+    })
   } catch (error) {
     res.json({
       message: error
@@ -67,7 +90,7 @@ const updateJugador = async (req, res) => {
     jugador.nombreJugador = req.body.nombre
     jugador.apellidoJugador = req.body.apellido
     jugador.apellido2Jugador = req.body.apellido2
-    jugador.dniJugador = req.body.dni
+    jugador.dniJugador = req.body.DNI
     jugador.telefonoJugador = req.body.telefono
     jugador.emailJugador = req.body.email
     jugador.direccionJugador = req.body.direccion
@@ -79,7 +102,10 @@ const updateJugador = async (req, res) => {
     jugador.clubJugador = req.body.club
     jugador.equipoJugador = req.body.equipo
     const savedJugador = await jugador.save()
-    res.json(savedJugador)
+    res.json({
+      message: 'Jugador actualizado',
+      data: savedJugador
+    })
   } catch (error) {
     res.json({
       message: error
@@ -89,7 +115,10 @@ const updateJugador = async (req, res) => {
 const deleteJugadorById = async (req, res) => {
   try {
     const jugador = await Jugador.findByIdAndDelete(req.params.id)
-    res.json(jugador)
+    res.json({
+      message: 'Jugador eliminado',
+      data: jugador
+    })
   } catch (error) {
     res.json({
       message: error
