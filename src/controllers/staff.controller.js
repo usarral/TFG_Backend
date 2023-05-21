@@ -3,23 +3,26 @@ import Staff from '../models/staff.model.js'
 const getStaffs = async (req, res) => {
   let staffs = await Staff.find()
   if (staffs.length === 0) {
-    res.status(404).json({
-      message: 'No hay staffs'
-    })
+    res.status(200).json({ message: 'No hay staffs' })
     return
   }
   staffs = staffs.map(staff => {
     return {
       id: staff._id,
+      foto:
+        staff.fotoStaff ||
+        'https://ui-avatars.com/api/?name=' +
+          staff.nombreStaff.substring(0, 1) +
+          '+' +
+          staff.apellidoStaff.substring(0, 1) +
+          '&background=random',
       nombre: staff.nombreStaff,
       apellido: staff.apellidoStaff,
       apellido2: staff.apellido2Staff,
-      fechaNacimiento: staff.fechaNacimientoStaff,
       DNI: staff.dniStaff,
+      fechaNacimiento: staff.fechaNacimientoStaff,
       email: staff.emailStaff,
-      estado: staff.estadoStaff,
-      cargo: staff.cargoStaff,
-      foto: staff.fotoStaff
+      estado: staff.estadoStaff
     }
   })
   res.status(200).json({
@@ -32,7 +35,7 @@ const createStaff = async (req, res) => {
     nombreStaff: req.body.nombre,
     apellidoStaff: req.body.apellido,
     apellido2Staff: req.body.apellido2,
-    dniStaff: req.body.dni,
+    dniStaff: req.body.DNI,
     telefonoStaff: req.body.telefono,
     emailStaff: req.body.email,
     direccionStaff: req.body.direccion,
@@ -47,7 +50,10 @@ const createStaff = async (req, res) => {
   })
   try {
     const savedStaff = await staff.save()
-    res.json(savedStaff)
+    res.status(201).json({
+      message: 'Staff creado',
+      data: savedStaff
+    })
   } catch (error) {
     res.json({
       message: error
@@ -57,7 +63,27 @@ const createStaff = async (req, res) => {
 const getStaffById = async (req, res) => {
   try {
     const staff = await Staff.findById(req.params.id)
-    res.json(staff)
+    res.status(200).json({
+      message: 'Staff encontrado',
+      data: {
+        id: staff._id,
+        nombre: staff.nombreStaff,
+        apellido: staff.apellidoStaff,
+        apellido2: staff.apellido2Staff,
+        DNI: staff.dniStaff,
+        telefono: staff.telefonoStaff,
+        email: staff.emailStaff,
+        direccion: staff.direccionStaff,
+        ciudad: staff.ciudadStaff,
+        provincia: staff.provinciaStaff,
+        CP: staff.CPStaff,
+        fechaNacimiento: staff.fechaNacimientoStaff,
+        cargo: staff.cargoStaff,
+        club: staff.clubStaff,
+        equipo: staff.equipoStaff,
+        foto: staff.fotoStaff
+      }
+    })
   } catch (error) {
     res.json({
       message: error
@@ -71,7 +97,7 @@ const updateStaff = async (req, res) => {
     staff.nombreStaff = req.body.nombre
     staff.apellidoStaff = req.body.apellido
     staff.apellido2Staff = req.body.apellido2
-    staff.dniStaff = req.body.dni
+    staff.dniStaff = req.body.DNI
     staff.telefonoStaff = req.body.telefono
     staff.emailStaff = req.body.email
     staff.direccionStaff = req.body.direccion
@@ -83,7 +109,10 @@ const updateStaff = async (req, res) => {
     staff.clubStaff = req.body.club
     staff.equipoStaff = req.body.equipo
     const savedStaff = await staff.save()
-    res.json(savedStaff)
+    res.status(200).json({
+      message: 'Staff actualizado',
+      data: savedStaff
+    })
   } catch (error) {
     res.json({
       message: error

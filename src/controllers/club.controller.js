@@ -46,7 +46,9 @@ const getClub = async (req, res) => {
       web: club.webClub,
       equipos: club.equiposClub,
       sanciones: club.sancionesClub,
-      escudo: club.escudoClub
+      escudo:
+        club.escudoClub ||
+        `https://ui-avatars.com/api/?name=${club.nombreClub}&background=random`
     }
   })
 }

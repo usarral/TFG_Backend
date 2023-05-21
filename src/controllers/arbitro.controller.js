@@ -23,7 +23,13 @@ const getArbitros = async (req, res) => {
   arbitros = arbitros.map(arbitro => {
     return {
       id: arbitro._id,
-      foto: arbitro.fotoArbitro,
+      foto:
+        arbitro.fotoArbitro ||
+        'https://ui-avatars.com/api/?name=' +
+          arbitro.nombreArbitro.substring(0, 1) +
+          '+' +
+          arbitro.apellidoArbitro.substring(0, 1) +
+          '&background=random',
       nombre: arbitro.nombreArbitro,
       apellido: arbitro.apellidoArbitro,
       apellido2: arbitro.apellido2Arbitro,
@@ -158,7 +164,6 @@ const updateArbitro = async (req, res) => {
     res.status(404).json({ message: 'Arbitro no encontrado' })
     return
   }
-  console.log(req.body)
 
   arbitro.nombreArbitro = nombre || arbitro.nombreArbitro
   arbitro.apellidoArbitro = apellido || arbitro.apellidoArbitro
