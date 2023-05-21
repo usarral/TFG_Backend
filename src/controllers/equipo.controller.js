@@ -10,7 +10,12 @@ const getEquipos = async (req, res) => {
   equipos = equipos.map(equipo => {
     return {
       id: equipo._id,
-      escudo: equipo.escudoEquipo,
+      escudo:
+        equipo.escudoEquipo ||
+        `https://ui-avatars.com/api/?name=${equipo.nombreEquipo.substring(
+          0,
+          1
+        )}&background=random`,
       nombre: equipo.nombreEquipo,
       email: equipo.emailEquipo,
       telefono: equipo.telefonoEquipo
@@ -24,7 +29,22 @@ const getEquipos = async (req, res) => {
 const getEquipo = async (req, res) => {
   try {
     const equipo = await Equipo.findById(req.params.id)
-    res.json(equipo)
+    res.json({
+      message: 'Equipo encontrado',
+      data: {
+        id: equipo._id,
+        nombre: equipo.nombreEquipo,
+        categoria: equipo.categoriaEquipo,
+        responsable: equipo.responsableEquipo,
+        email: equipo.emailEquipo,
+        telefono: equipo.telefonoEquipo,
+        direccion: equipo.direccionEquipo,
+        ciudad: equipo.ciudadEquipo,
+        provincia: equipo.provinciaEquipo,
+        CP: equipo.CPEquipo,
+        club: equipo.clubEquipo
+      }
+    })
   } catch (error) {
     res.json({
       message: error
@@ -44,11 +64,19 @@ const createEquipo = async (req, res) => {
     provinciaEquipo: req.body.provincia,
     CPEquipo: req.body.CP,
     escudoEquipo: req.body.escudo,
-    clubEquipo: req.body.club
+    clubEquipo:
+      req.body.club ||
+      `https://ui-avatars.com/api/?name=${req.body.nombre.substring(
+        0,
+        1
+      )}&background=random`
   })
   try {
     const savedEquipo = await equipo.save()
-    res.json(savedEquipo)
+    res.json({
+      message: 'Equipo creado',
+      data: savedEquipo
+    })
   } catch (error) {
     res.json({
       message: error
@@ -85,7 +113,10 @@ const updateEquipo = async (req, res) => {
   }
   try {
     const updatedEquipo = await Equipo.updateOne({ _id: id }, { $set: equipo })
-    res.json(updatedEquipo)
+    res.json({
+      message: 'Equipo actualizado',
+      data: updatedEquipo
+    })
   } catch (error) {
     res.json({
       message: error
