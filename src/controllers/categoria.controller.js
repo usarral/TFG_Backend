@@ -15,7 +15,7 @@ import Categoria from '../models/categoria.model.js'
 const getCategorias = async (req, res) => {
   let categorias = await Categoria.find()
   if (categorias.length === 0) {
-    res.status(200).json({ message: 'No hay categorias' })
+    res.status(204).json({ message: 'No hay categorias' })
     return
   }
 

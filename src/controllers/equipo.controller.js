@@ -4,7 +4,7 @@ import Equipo from '../models/equipo.model.js'
 const getEquipos = async (req, res) => {
   let equipos = await Equipo.find()
   if (equipos.length === 0) {
-    res.status(404).json({ message: 'No hay equipos' })
+    res.status(204).json({ message: 'No hay equipos' })
     return
   }
   equipos = equipos.map(equipo => {
@@ -64,12 +64,7 @@ const createEquipo = async (req, res) => {
     provinciaEquipo: req.body.provincia,
     CPEquipo: req.body.CP,
     escudoEquipo: req.body.escudo,
-    clubEquipo:
-      req.body.club ||
-      `https://ui-avatars.com/api/?name=${req.body.nombre.substring(
-        0,
-        1
-      )}&background=random`
+    clubEquipo: req.body.club
   })
   try {
     const savedEquipo = await equipo.save()

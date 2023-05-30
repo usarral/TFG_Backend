@@ -49,6 +49,18 @@ const jugadorSchema = new Schema(
     fotoJugador: {
       type: String,
       required: false
+    },
+    categoriaJugador: {
+      type: Schema.Types.ObjectId,
+      ref: 'Categoria'
+    },
+    clubJugador: {
+      type: Schema.Types.ObjectId,
+      ref: 'Club'
+    },
+    equipoJugador: {
+      type: Schema.Types.ObjectId,
+      ref: 'Equipo'
     }
   },
   {

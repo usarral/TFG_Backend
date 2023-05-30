@@ -17,7 +17,7 @@ import Arbitro from '../models/arbitro.model.js'
 const getArbitros = async (req, res) => {
   let arbitros = await Arbitro.find()
   if (arbitros.length === 0) {
-    res.status(200).json({ message: 'No hay arbitros' })
+    res.status(204).json({ message: 'No hay arbitros' })
     return
   }
   arbitros = arbitros.map(arbitro => {

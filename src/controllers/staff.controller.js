@@ -3,7 +3,7 @@ import Staff from '../models/staff.model.js'
 const getStaffs = async (req, res) => {
   let staffs = await Staff.find()
   if (staffs.length === 0) {
-    res.status(200).json({ message: 'No hay staffs' })
+    res.status(204).json({ message: 'No hay staffs' })
     return
   }
   staffs = staffs.map(staff => {

@@ -1,10 +1,10 @@
 import { Schema, model } from 'mongoose'
 const partidoSchema = new Schema({
-  equipoLocal: {
+  equipoLocalPartido: {
     type: Schema.Types.ObjectId,
     ref: 'Equipo'
   },
-  equipoVisitante: {
+  equipoVisitantePartido: {
     type: Schema.Types.ObjectId,
     ref: 'Equipo'
   },
@@ -14,10 +14,6 @@ const partidoSchema = new Schema({
   },
   fechaPartido: {
     type: Date,
-    required: true
-  },
-  horaPartido: {
-    type: String,
     required: true
   },
   pabellonPartido: {
@@ -32,15 +28,17 @@ const partidoSchema = new Schema({
     type: String,
     enum: ['Local', 'Visitante', 'Empate', 'No jugado']
   },
-  puntosLocal: {
+  golesLocalPartido: {
     type: Number
   },
-  puntosVisitante: {
+  golesVisitantePartido: {
     type: Number
   },
-  actaPartido: {
-    type: String
+  categoriaPartido: {
+    type: Schema.Types.ObjectId,
+    ref: 'Categoria'
   },
+
   sancionesPartido: [
     {
       type: Schema.Types.ObjectId,

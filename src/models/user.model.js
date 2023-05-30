@@ -1,8 +1,26 @@
 import { Schema, model } from 'mongoose'
 const userSchema = new Schema({
+  rolUser: {
+    type: String,
+    required: true,
+    enum: ['arbitro', 'club', 'federacion']
+  },
+  arbitroUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'Arbitro'
+  },
+  clubUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'Club'
+  },
+  federacionUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'Federacion'
+  },
   DNIUser: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   nombreUser: {
     type: String,
@@ -10,15 +28,20 @@ const userSchema = new Schema({
   },
   emailUser: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   passwordUser: {
     type: String,
     required: true
   },
-  rolUser: {
+  fingerprintUser: {
     type: String,
-    required: true
+    required: false
+  },
+  tokenUser: {
+    type: String,
+    required: false
   }
 })
 
