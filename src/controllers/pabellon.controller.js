@@ -3,7 +3,7 @@ import Pabellon from '../models/pabellon.model.js'
 const getPabellones = async (req, res) => {
   let pabellones = await Pabellon.find()
   if (pabellones.length === 0) {
-    res.status(404).json({ message: 'No hay pabellones' })
+    res.status(204).json({ message: 'No hay pabellones' })
     return
   }
   pabellones = pabellones.map(pabellon => {

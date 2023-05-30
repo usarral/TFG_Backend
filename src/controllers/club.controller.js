@@ -3,7 +3,7 @@ import Club from '../models/club.model.js'
 const getClubs = async (req, res) => {
   let clubs = await Club.find()
   if (!clubs) {
-    res.status(404).json({ message: 'No hay clubs' })
+    res.status(204).json({ message: 'No hay clubs' })
     return
   }
   clubs = clubs.map(club => {
@@ -27,7 +27,7 @@ const getClub = async (req, res) => {
   const { id } = req.params
   const club = await Club.findById(id)
   if (!club) {
-    res.status(200).json({ message: 'Club no encontrado' })
+    res.status(204).json({ message: 'Club no encontrado' })
     return
   }
 
