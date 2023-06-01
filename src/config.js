@@ -1,7 +1,8 @@
 const PROTOCOL = process.env.SERVER_PROTOCOL || 'http'
 const HOST = process.env.SERVER_HOST || 'localhost'
-const PORT = process.env.SERVER_PORT || 3000
-const BASEURL = process.env.BASEURL || `${PROTOCOL}://${HOST}:${PORT}`
+const BACKEND_PORT = process.env.BACKEND_PORT || 3000
+const BACKEND_URL =
+  process.env.BACKEND_URL || `${PROTOCOL}://${HOST}:${BACKEND_PORT}`
 const TYPE = process.env.SERVER_ENV || 'dev'
 const MONGO_URI =
   process.env.MONGO_URI ||
@@ -10,4 +11,4 @@ const MONGO_URI =
   }@${process.env.MONGO_HOST || 'db'}:${process.env.MONGO_PORT || 27017}/${
     process.env.MONGO_DATABASE || 'app'
   }?authSource=admin`
-export { PORT, TYPE, MONGO_URI, BASEURL, PROTOCOL, HOST }
+export { BACKEND_PORT, TYPE, MONGO_URI, BACKEND_URL, PROTOCOL, HOST }

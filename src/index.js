@@ -1,7 +1,7 @@
 import app from './app.js'
 import './database.js'
-import { PORT } from './config.js'
+import { BACKEND_PORT } from './config.js'
 
-app.listen(PORT, () => {
-  console.log(`Backend listening at http://localhost:${PORT}`)
+app.listen(BACKEND_PORT, () => {
+  console.log(`Backend listening at http://localhost:${BACKEND_PORT}`)
 })

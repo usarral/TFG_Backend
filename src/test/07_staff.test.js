@@ -1,5 +1,5 @@
 import { matchers } from 'jest-json-schema'
-import { BASEURL } from '../config.js'
+import { BACKEND_URL } from '../config.js'
 import fetch from 'node-fetch'
 expect.extend(matchers)
 let createdId

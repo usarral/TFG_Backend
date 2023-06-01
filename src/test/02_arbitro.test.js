@@ -1,5 +1,5 @@
 import { matchers } from 'jest-json-schema'
-import { BASEURL } from '../config.js'
+import { BACKEND_URL } from '../config.js'
 import fetch from 'node-fetch'
 expect.extend(matchers)
 let createdId
@@ -25,7 +25,7 @@ let createdId
 //       body: JSON.stringify(arbitro),
 //       headers: { 'Content-Type': 'application/json' }
 //     }
-//     const res = await fetch(`${BASEURL}/arbitro`, options)
+//     const res = await fetch(`${BACKEND_URL}/arbitro`, options)
 //     const body = await res.json()
 //     createdId = body.arbitro.id
 //     expect(res.status).toBe(201)
@@ -65,7 +65,7 @@ let createdId
 //         foto: { type: 'string' }
 //       }
 //     }
-//     const arbitros = await fetch(`${BASEURL}/arbitro`).then(res => res.json())
+//     const arbitros = await fetch(`${BACKEND_URL}/arbitro`).then(res => res.json())
 //     expect(arbitros).toMatchSchema(schema)
 //   })
 //   test('Test Obtener Arbitro por ID', async () => {
@@ -88,7 +88,7 @@ let createdId
 //         fechaAlta: { type: 'string' }
 //       }
 //     }
-//     const arbitro = await fetch(`${BASEURL}/arbitro/${createdId}`).then(res =>
+//     const arbitro = await fetch(`${BACKEND_URL}/arbitro/${createdId}`).then(res =>
 //       res.json()
 //     )
 //     expect(arbitro).toMatchSchema(schema)
@@ -114,7 +114,7 @@ let createdId
 //       body: JSON.stringify(arbitro),
 //       headers: { 'Content-Type': 'application/json' }
 //     }
-//     const res = await fetch(`${BASEURL}/arbitro/${createdId}`, options)
+//     const res = await fetch(`${BACKEND_URL}/arbitro/${createdId}`, options)
 //     const body = await res.json()
 //     expect(res.status).toBe(200)
 //     expect(body).toMatchSchema({
@@ -144,7 +144,7 @@ let createdId
 //     })
 //   })
 //   test('Test Eliminar Arbitro por ID', async () => {
-//     const res = await fetch(`${BASEURL}/arbitro/${createdId}`, {
+//     const res = await fetch(`${BACKEND_URL}/arbitro/${createdId}`, {
 //       method: 'DELETE'
 //     })
 //     const body = await res.json()

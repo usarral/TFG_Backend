@@ -1,6 +1,6 @@
 import { matchers } from 'jest-json-schema'
 import fetch from 'node-fetch'
-import { BASEURL } from '../config.js'
+import { BACKEND_URL } from '../config.js'
 expect.extend(matchers)
 let categoriaId
 
@@ -17,7 +17,7 @@ describe('Tests de API de Categoria', () => {
     //   }),
     //   headers: { 'Content-Type': 'application/json' }
     // }
-    // const res = await fetch(`${BASEURL}/categoria`, options)
+    // const res = await fetch(`${BACKEND_URL}/categoria`, options)
     // expect(res.status).toBe(400)
     // const error = await res.json()
     // expect(error).toMatchObject({
@@ -36,7 +36,7 @@ describe('Tests de API de Categoria', () => {
     //   }),
     //   headers: { 'Content-Type': 'application/json' }
     // }
-    // const res = await fetch(`${BASEURL}/categoria`, options)
+    // const res = await fetch(`${BACKEND_URL}/categoria`, options)
     // expect(res.status).toBe(201)
     // const categoria = await res.json()
     // expect(categoria).toMatchObject({
@@ -61,12 +61,12 @@ describe('Tests de API de Categoria', () => {
     //   },
     //   required: ['id', 'nombre', 'genero', 'edadMin', 'edadMax']
     // }
-    // let categorias = await fetch(`${BASEURL}/categoria`).then(res => res.json())
+    // let categorias = await fetch(`${BACKEND_URL}/categoria`).then(res => res.json())
     // expect(categorias).toMatchSchema(schema)
   })
   test('Obtener Categoría por ID invalido', async () => {})
   test('Obtener Categoría por ID valido', async () => {
-    // const res = await fetch(`${BASEURL}/categoria/${categoriaId}`).then(res =>
+    // const res = await fetch(`${BACKEND_URL}/categoria/${categoriaId}`).then(res =>
     //   res.json()
     // )
     // expect(res).toMatchObject({
@@ -83,7 +83,7 @@ describe('Tests de API de Categoria', () => {
     //   headers: { 'content-type': 'application/json' },
     //   body: '{"nombre":"CATEGORIA MODIFICADA POR EL TEST","min_edad":18,"max_edad":99,"genero":"M"}'
     // }
-    // const res = await fetch(`${BASEURL}/categoria/${categoriaId}`, options)
+    // const res = await fetch(`${BACKEND_URL}/categoria/${categoriaId}`, options)
     //   .then(response => response.json())
     //   .catch(err => console.error(err))
     // expect(res).toMatchObject({
@@ -99,7 +99,7 @@ describe('Tests de API de Categoria', () => {
     //     method: 'DELETE'
     //   }
     //   const res = await fetch(
-    //     `${BASEURL}/categoria/${categoriaId}`,
+    //     `${BACKEND_URL}/categoria/${categoriaId}`,
     //     options
     //   ).then(response => response.json())
     //   expect(res).toMatchObject({
