@@ -13,10 +13,7 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Club'
   },
-  federacionUser: {
-    type: Schema.Types.ObjectId,
-    ref: 'Federacion'
-  },
+
   DNIUser: {
     type: String,
     required: true,
