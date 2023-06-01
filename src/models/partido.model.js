@@ -37,13 +37,13 @@ const partidoSchema = new Schema({
   categoriaPartido: {
     type: Schema.Types.ObjectId,
     ref: 'Categoria'
-  },
+  }
 
-  sancionesPartido: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Sancion'
-    }
-  ]
+  // sancionesPartido: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Sancion'
+  //   }
+  // ]
 })
 export default model('Partido', partidoSchema)

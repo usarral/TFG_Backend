@@ -52,13 +52,13 @@ const clubSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Equipo'
     }
-  ],
-  sancionesClub: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Sancion'
-    }
   ]
+  // sancionesClub: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Sancion'
+  //   }
+  // ]
 })
 
 export default model('Club', clubSchema)
