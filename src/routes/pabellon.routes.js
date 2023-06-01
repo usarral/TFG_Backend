@@ -1,5 +1,4 @@
 import { Router } from 'express'
-const router = Router()
 import {
   createPabellon,
   getPabellones,
@@ -7,6 +6,7 @@ import {
   deletePabellon,
   updatePabellon
 } from '../controllers/pabellon.controller.js'
+const router = Router()
 
 router.get('/', getPabellones)
 router.post('/', createPabellon)

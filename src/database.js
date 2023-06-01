@@ -5,11 +5,11 @@ const connectWithRetry = () => {
   console.log('Conectando a la base de datos...')
   mongoose
     .connect(MONGO_URI)
-    .then(() => console.info('Conexión a la base de datos establecida'))
     .catch(error => {
       console.error('Error al conectar a la base de datos, reintentando...')
       setTimeout(connectWithRetry, 5000)
     })
+    .then(() => console.info('Conexión a la base de datos establecida'))
 }
 
 connectWithRetry()
@@ -21,4 +21,4 @@ setInterval(() => {
     )
     connectWithRetry()
   }
-}, 10000)
+}, 5000)

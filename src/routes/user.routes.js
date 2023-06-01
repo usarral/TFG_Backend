@@ -4,14 +4,18 @@ import {
   getUserById,
   createUser,
   deleteUser,
-  updateUser
+  updateUser,
+  checkAuth
 } from '../controllers/user.controller.js'
 const router = Router()
 
 // GET /users
-router.get('/', getUsers)
+// router.get('/', getUsers)
+// GET /checkauth
+router.post('/checkauth', checkAuth)
 // GET /users/:id
 router.get('/:id', getUserById)
+router.get('/', getUsers)
 // POST /users
 router.post('/', createUser)
 // PUT /users/:id
