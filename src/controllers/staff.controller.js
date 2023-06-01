@@ -29,7 +29,8 @@ const getStaffs = async (req, res) => {
       DNI: staff.dniStaff,
       fechaNacimiento: staff.fechaNacimientoStaff,
       email: staff.emailStaff,
-      estado: staff.estadoStaff
+      estado: staff.estadoStaff,
+      cargo: staff.cargoStaff
     }
   })
   // Return staffs

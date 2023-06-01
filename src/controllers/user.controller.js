@@ -1,5 +1,4 @@
 import User from '../models/user.model.js'
-import { createHash } from 'node:crypto'
 const getUsers = async (req, res) => {
   try {
     const users = await User.find()

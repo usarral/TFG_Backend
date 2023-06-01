@@ -11,6 +11,9 @@ const getJugadores = async (req, res) => {
     return
   }
   // If there are jugadores
+
+  console.log(jugadores)
+
   // Map jugadores to return only the data we want to show
   jugadores = jugadores.map(jugador => {
     return {
@@ -27,14 +30,12 @@ const getJugadores = async (req, res) => {
       apellido2: jugador.apellido2Jugador,
       DNI: jugador.dniJugador,
       fechaNacimiento: jugador.fechaNacimientoJugador,
-      email: jugador.emailJugador
+      email: jugador.emailJugador,
+      club: jugador.clubJugador
     }
   })
   // If there is a query string
-  if (req.query.club) {
-    // Filter jugadores by club
-    jugadores = jugadores.filter(jugador => jugador.club === req.query.club)
-  }
+
   // Return jugadores
   res.status(200).json({
     message: 'Jugadores encontrados',
