@@ -10,7 +10,7 @@ import equipoRoutes from './routes/equipo.routes.js'
 import jugadorRoutes from './routes/jugador.routes.js'
 import pabellonRoutes from './routes/pabellon.routes.js'
 import partidoRoutes from './routes/partido.routes.js'
-import sancionRoutes from './routes/sancion.routes.js'
+// import sancionRoutes from './routes/sancion.routes.js'
 import staffRoutes from './routes/staff.routes.js'
 import userRoutes from './routes/user.routes.js'
 import generalRoutes from './routes/general.routes.js'
@@ -28,7 +28,7 @@ app.use('/equipo', equipoRoutes)
 app.use('/jugador', jugadorRoutes)
 app.use('/pabellon', pabellonRoutes)
 app.use('/partido', partidoRoutes)
-app.use('/sancion', sancionRoutes)
+// app.use('/sancion', sancionRoutes)
 app.use('/staff', staffRoutes)
 app.use('/user', userRoutes)
 app.use('/', generalRoutes)

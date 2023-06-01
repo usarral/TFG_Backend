@@ -59,7 +59,7 @@ const getClub = async (req, res) => {
       email: club.emailClub,
       web: club.webClub,
       equipos: club.equiposClub,
-      sanciones: club.sancionesClub,
+      // sanciones: club.sancionesClub,
       escudo:
         club.escudoClub ||
         `https://ui-avatars.com/api/?name=${club.nombreClub}&background=random`

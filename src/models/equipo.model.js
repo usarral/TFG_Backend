@@ -56,12 +56,12 @@ const equipoSchema = new Schema({
       ref: 'Partido'
     }
   ],
-  sancionesEquipo: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Sancion'
-    }
-  ],
+  // sancionesEquipo: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Sancion'
+  //   }
+  // ],
   fechaAltaEquipo: {
     type: Date,
     default: Date.now
