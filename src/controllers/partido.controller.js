@@ -21,7 +21,7 @@ const getPartidos = async (req, res) => {
       pabellon: partido.pabellonPartido,
       equipoLocal: partido.equipoLocalPartido,
       equipoVisitante: partido.equipoVisitantePartido,
-      arbitros: partido.arbitrosPartido
+      arbitro: partido.arbitroPartido
     }
   })
   // Return partidos
@@ -46,9 +46,6 @@ const getPartidos = async (req, res) => {
       )
     })
   }
-  // if (req.query.arbitro) {
-  // }
-
   // Return partidos
   res.status(200).json({
     message: 'Partidos encontrados',
@@ -79,7 +76,7 @@ const getPartido = async (req, res) => {
       equipoVisitante: partido.equipoVisitantePartido,
       golesLocal: partido.golesLocalPartido,
       golesVisitante: partido.golesVisitantePartido,
-      arbitros: partido.arbitrosPartido
+      arbitro: partido.arbitroPartido
     }
   })
 }
@@ -92,7 +89,7 @@ const createPartido = async (req, res) => {
     pabellon,
     equipoLocal,
     equipoVisitante,
-    arbitros,
+    arbitro,
     golesLocal,
     golesVisitante
   } = req.body
@@ -103,7 +100,7 @@ const createPartido = async (req, res) => {
     pabellonPartido: pabellon,
     equipoLocalPartido: equipoLocal,
     equipoVisitantePartido: equipoVisitante,
-    arbitrosPartido: arbitros,
+    arbitroPartido: arbitro,
     golesLocalPartido: golesLocal,
     golesVisitantePartido: golesVisitante
   })
@@ -122,7 +119,7 @@ const createPartido = async (req, res) => {
       pabellon: partidoGuardado.pabellonPartido,
       equipoLocal: partidoGuardado.equipoLocalPartido,
       equipoVisitante: partidoGuardado.equipoVisitantePartido,
-      arbitros: partidoGuardado.arbitrosPartido,
+      arbitro: partidoGuardado.arbitroPartido,
       golesLocal: partidoGuardado.golesLocalPartido,
       golesVisitante: partidoGuardado.golesVisitantePartido
     }
@@ -138,7 +135,7 @@ const updatePartido = async (req, res) => {
     pabellon,
     equipoLocal,
     equipoVisitante,
-    arbitros,
+    arbitro,
     golesLocal,
     golesVisitante
   } = req.body
@@ -151,7 +148,7 @@ const updatePartido = async (req, res) => {
       pabellonPartido: pabellon,
       equipoLocalPartido: equipoLocal,
       equipoVisitantePartido: equipoVisitante,
-      arbitrosPartido: arbitros,
+      arbitroPartido: arbitro,
       golesLocalPartido: golesLocal,
       golesVisitantePartido: golesVisitante
     },
@@ -173,7 +170,7 @@ const updatePartido = async (req, res) => {
       pabellon: partido.pabellonPartido,
       equipoLocal: partido.equipoLocalPartido,
       equipoVisitante: partido.equipoVisitantePartido,
-      arbitros: partido.arbitrosPartido,
+      arbitro: partido.arbitroPartido,
       golesLocal: partido.golesLocalPartido,
       golesVisitante: partido.golesVisitantePartido
     }
@@ -200,7 +197,7 @@ const deletePartido = async (req, res) => {
       pabellon: partido.pabellonPartido,
       equipoLocal: partido.equipoLocalPartido,
       equipoVisitante: partido.equipoVisitantePartido,
-      arbitros: partido.arbitrosPartido,
+      arbitro: partido.arbitroPartido,
       golesLocal: partido.golesLocalPartido,
       golesVisitante: partido.golesVisitantePartido
     }
