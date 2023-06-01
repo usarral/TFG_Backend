@@ -1,6 +1,3 @@
-import dotenv from 'dotenv'
-dotenv.config({ path: '.env' })
-
 const PROTOCOL = process.env.SERVER_PROTOCOL || 'http'
 const HOST = process.env.SERVER_HOST || 'localhost'
 const PORT = process.env.SERVER_PORT || 3000
