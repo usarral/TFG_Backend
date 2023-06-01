@@ -1,5 +1,4 @@
 import { Router } from 'express'
-const router = Router()
 
 import {
   createPartido,
@@ -8,6 +7,7 @@ import {
   updatePartido,
   deletePartido
 } from '../controllers/partido.controller.js'
+const router = Router()
 
 // GET: Return all partidos
 router.get('/', getPartidos)

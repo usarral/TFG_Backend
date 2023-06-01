@@ -7,10 +7,23 @@ const sancionSchema = new Schema(
     },
     tipoSancion: {
       type: String,
-      enum: ['Jugador', 'Staff', 'Equipo', 'Club']
+      enum: ['Jugador', 'Staff', 'Equipo', 'Club', 'Arbitro']
     },
-    destinatarioSancion: {
-      type: String
+    jugadorSancion: {
+      type: Schema.Types.ObjectId,
+      ref: 'Jugador'
+    },
+    staffSancion: {
+      type: Schema.Types.ObjectId,
+      ref: 'Staff'
+    },
+    equipoSancion: {
+      type: Schema.Types.ObjectId,
+      ref: 'Equipo'
+    },
+    clubSancion: {
+      type: Schema.Types.ObjectId,
+      ref: 'Club'
     },
     causaSancion: {
       type: String
