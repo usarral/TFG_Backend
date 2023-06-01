@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import { TYPE } from './config.js'
+import authRoutes from './routes/auth.routes.js'
 import arbitroRoutes from './routes/arbitro.routes.js'
 import categoriaRoutes from './routes/categoria.routes.js'
 import clubRoutes from './routes/club.routes.js'
@@ -19,6 +20,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use(morgan(TYPE))
+app.use('/auth', authRoutes)
 app.use('/arbitro', arbitroRoutes)
 app.use('/categoria', categoriaRoutes)
 app.use('/club', clubRoutes)
